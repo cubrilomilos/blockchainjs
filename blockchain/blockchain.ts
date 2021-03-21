@@ -1,8 +1,8 @@
-import Block from "./block"
+import Block from './block';
 
 export default class Blockchain {
     blockchain: Block[];
-    difficulty: number = 1;
+    difficulty = 1;
 
     constructor(difficulty: number) {
         this.blockchain = [this.createGenesisBlock()];
