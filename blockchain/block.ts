@@ -5,7 +5,6 @@ export default class Block {
     nonce: number;
 
     constructor(
-        public index: number,
         public timestamp: Date,
         public payload: any,
         public previousHash: string = ''
@@ -15,7 +14,7 @@ export default class Block {
     }
 
     calculateHash = (): string => {
-        return SHA256(this.index.toString() +
+        return SHA256(
                     this.timestamp +
                     this.previousHash +
                     JSON.stringify(this.payload) +

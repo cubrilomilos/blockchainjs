@@ -9,8 +9,8 @@ import Blockchain from 'blockchain/blockchain';
 })
 export class AppComponent {
   title = 'blockchainjs';
-  difficulty: number = 1;
-  difficultyMessage: string = '';
+  difficulty = 1;
+  difficultyMessage = '';
 
   onDifficultyChange = (e: any) => {
     this.difficulty = +e.target.value;
@@ -23,9 +23,9 @@ export class AppComponent {
 
   executeBlockchain = (): void => {
     console.log(this.difficulty);
-    let blockchain = new Blockchain(this.difficulty);
+    const blockchain = new Blockchain(this.difficulty);
 
-    blockchain.addBlock(new Block(1, new Date(), { coin: 3 }));
-    blockchain.addBlock(new Block(2, new Date(), { coin: 53 }));
+    blockchain.addBlock(new Block(new Date(), { coin: 3 }));
+    blockchain.addBlock(new Block(new Date(), { coin: 53 }));
   }
 }

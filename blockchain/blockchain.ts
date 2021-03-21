@@ -10,7 +10,7 @@ export default class Blockchain {
     }
 
     createGenesisBlock = (): Block => {
-        return new Block(0, new Date(), {}, '0');
+        return new Block(new Date(), {}, '0');
     }
 
     getLastBlock = (): Block => {
