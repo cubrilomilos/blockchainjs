@@ -1,35 +1,36 @@
 import { SHA256 } from 'crypto-js';
+import Transaction from './transaction';
 
 export default class Block {
-    hash: string;
-    nonce: number;
+	public hash: string;
+	private nonce: number;
 
-    constructor(
-        public timestamp: Date,
-        public payload: any,
-        public previousHash: string = ''
-    ) {
-        this.hash = this.calculateHash();
-        this.nonce = 0;
-    }
+	constructor(
+		private timestamp: Date,
+		public transactions: Transaction[],
+		public previousHash: string = ''
+	) {
+		this.hash = this.calculateHash();
+		this.nonce = 0;
+	}
 
-    calculateHash = (): string => {
-        return SHA256(
-                    this.timestamp +
-                    this.previousHash +
-                    JSON.stringify(this.payload) +
-                    this.nonce
-                ).toString();
-    }
+	calculateHash = (): string => {
+		return SHA256(
+					this.timestamp +
+					this.previousHash +
+					JSON.stringify(this.transactions) +
+					this.nonce
+				).toString();
+	}
 
-    mineBlock = (difficulty: number): void => {
-        while (this.hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')) {
+	mineBlock = (difficulty: number): void => {
+		while (this.hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')) {
 			console.log(this.nonce);
-            this.nonce++;
-            this.hash = this.calculateHash();
+			this.nonce++;
+			this.hash = this.calculateHash();
 			console.log(this.hash);
-        }
+		}
 
-        console.log('Block mined. Hash: ' + this.hash);
-    }
+		console.log('Block mined. Hash: ' + this.hash);
+	}
 }
