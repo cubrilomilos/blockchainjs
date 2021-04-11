@@ -27,6 +27,10 @@ export default class Blockchain {
 			const currentBlock = this.blockchain[i];
 			const prevBlock = this.blockchain[i - 1];
 
+			if (!currentBlock.verifyAllTransactions()) {
+				return false;
+			}
+
 			if (currentBlock.previousHash !== prevBlock.hash) {
 				return false;
 			}
@@ -52,7 +56,15 @@ export default class Blockchain {
 		];
 	}
 
-	createTransaction = (transaction: Transaction): void => {
+	addTransaction = (transaction: Transaction): void => {
+		if (!transaction.addressFrom || !transaction.addressTo) {
+			throw new Error('Transaction must have from and to adress defined/');
+		}
+
+		if (!transaction.isValid()) {
+			throw new Error('Cannot add invalid transaction to blockchain');
+		}
+
 		// in realworld not all the pending transactions would be pushed to every block
 		this.pendingTransactions.push(transaction);
 	}

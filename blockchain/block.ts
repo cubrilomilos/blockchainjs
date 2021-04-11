@@ -33,4 +33,14 @@ export default class Block {
 
 		console.log('Block mined. Hash: ' + this.hash);
 	}
+
+	verifyAllTransactions = (): boolean => {
+		for (const transaction of this.transactions) {
+			if (!transaction.isValid()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
